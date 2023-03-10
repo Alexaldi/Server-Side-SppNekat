@@ -1,0 +1,32 @@
+.login-form {
+  max-width: 400px;
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  
+  .login-form h1 {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+  
+  .login-form .MuiTextField-root {
+    margin-bottom: 16px;
+  }
+  
+  .login-form .MuiButton-root {
+    margin-top: 24px;
+    background-color: #ff7171;
+    color: #fff;
+    text-transform: none;
+    .login-form .MuiButton-root:hover {
+      background-color: #ff4f4f;
+    }
+    
+    .login-form .MuiButton-root:active {
+      background-color: #e63e3e;
+    
+    }
+}
+
+}
