@@ -82,65 +82,73 @@ const Login = () => {
     }
 
     return (
-        <div className="login-container">
-            <ToastContainer />
-            <Box
-                sx={{
-                    marginTop: 3,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    backgroundColor: 'white',
-                    padding: '40px',
-                    borderRadius: '10px',
-                    boxShadow: '0px 3px 6px #00000029',
-                    maxWidth: '400px',
-                    width: '100%',
-                    boxSizing: 'border-box'
-                }}
-            >
-                <Typography component="h1" variant="h5" sx={{ textAlign: 'center', color: 'black' }}>
-                    Selamat Datang Admin!
-                </Typography>
-                <Typography component="p" variant="subtitle1" sx={{ textAlign: 'center', color: 'black', marginTop: '20px' }}>
-                    Lakukan Login Terlebih Dahulu
-                </Typography>
-                <Box component="form" onSubmit={Auth} noValidate sx={{ mt: 1 }}>
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="username"
-                        label="Username"
-                        name="username"
-                        autoComplete="username"
-                        autoFocus
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        autoComplete="current-password"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2, backgroundColor: '#2F80ED' }}
-                    >
-                        Log In
-                    </Button>
+        <>
+            {/* <div class="ocean">
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div> */}
+            <div className="login-container">
+                <ToastContainer />
+                <Box
+                    sx={{
+                        marginTop: 2,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        backgroundColor: 'white',
+                        padding: '40px',
+                        borderRadius: '10px',
+                        boxShadow: '0px 3px 6px #00000029',
+                        maxWidth: '400px',
+                        width: '100%',
+                        boxSizing: 'border-box',
+                        position: "relative", // tambahkan properti position relative pada Box
+                        zIndex: 1, // set z-index pada Box
+                    }}
+                >
+                    <Typography component="h1" variant="h5" sx={{ textAlign: 'center', color: 'black' }}>
+                        Selamat Datang Admin!
+                    </Typography>
+                    <Typography component="p" variant="subtitle1" sx={{ textAlign: 'center', color: 'black', marginTop: '20px' }}>
+                        Lakukan Login Terlebih Dahulu
+                    </Typography>
+                    <Box component="form" onSubmit={Auth} noValidate sx={{ mt: 1 }}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="username"
+                            label="Username"
+                            name="username"
+                            autoComplete="username"
+                            autoFocus
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            autoComplete="current-password"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2, backgroundColor: '#2F80ED' }}
+                        >
+                            Log In
+                        </Button>
+                    </Box>
                 </Box>
-            </Box>
-        </div>
+            </div>
+        </>
     );
 };
 
