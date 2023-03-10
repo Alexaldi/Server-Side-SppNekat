@@ -1,32 +1,44 @@
-.login-form {
-  max-width: 400px;
-  padding: 16px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  
-  .login-form h1 {
-    font-size: 28px;
-    margin-bottom: 24px;
-  }
-  
-  .login-form .MuiTextField-root {
-    margin-bottom: 16px;
-  }
-  
-  .login-form .MuiButton-root {
-    margin-top: 24px;
-    background-color: #ff7171;
-    color: #fff;
-    text-transform: none;
-    .login-form .MuiButton-root:hover {
-      background-color: #ff4f4f;
-    }
-    
-    .login-form .MuiButton-root:active {
-      background-color: #e63e3e;
-    
-    }
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('../../../public/svg/login.svg');
+  background-size: cover;
 }
 
+.login-box {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  width: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.login-header {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.text-field {
+  width: 100%;
+}
+
+.button {
+  margin-top: 2rem;
+  width: 100%;
 }
