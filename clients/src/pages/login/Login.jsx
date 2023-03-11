@@ -91,7 +91,6 @@ const Login = () => {
                 <ToastContainer />
                 <Box
                     sx={{
-                        marginTop: 2,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
@@ -101,18 +100,37 @@ const Login = () => {
                         boxShadow: '0px 3px 6px #00000029',
                         maxWidth: '400px',
                         width: '100%',
-                        boxSizing: 'border-box',
-                        position: "relative", // tambahkan properti position relative pada Box
-                        zIndex: 1, // set z-index pada Box
+                        position: 'relative',
+                        zIndex: 1,
+                        border: '1px solid #E5E5E5',
                     }}
                 >
-                    <Typography component="h1" variant="h5" sx={{ textAlign: 'center', color: 'black' }}>
+                    <Typography
+                        component="h1"
+                        variant="h5"
+                        sx={{
+                            textAlign: 'center',
+                            color: 'black',
+                            fontSize: '36px',
+                            fontWeight: 'bold',
+                            marginBottom: '20px',
+                        }}
+                    >
                         Selamat Datang Admin!
                     </Typography>
-                    <Typography component="p" variant="subtitle1" sx={{ textAlign: 'center', color: 'black', marginTop: '20px' }}>
+                    <Typography
+                        component="p"
+                        variant="subtitle1"
+                        sx={{
+                            textAlign: 'center',
+                            color: 'black',
+                            fontSize: '18px',
+                            marginBottom: '20px',
+                        }}
+                    >
                         Lakukan Login Terlebih Dahulu
                     </Typography>
-                    <Box component="form" onSubmit={Auth} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={Auth} noValidate sx={{ mt: 4 }}>
                         <TextField
                             margin="normal"
                             required
@@ -122,6 +140,22 @@ const Login = () => {
                             name="username"
                             autoComplete="username"
                             autoFocus
+                            sx={{
+                                borderRadius: '0',
+                                backgroundColor: 'transparent',
+                                borderBottom: '1px solid #2F80ED',
+                                '& .MuiOutlinedInput-root': {
+                                    '& fieldset': {
+                                        borderColor: 'transparent',
+                                    },
+                                    '&:hover fieldset': {
+                                        borderColor: 'transparent',
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: 'transparent',
+                                    },
+                                },
+                            }}
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />
@@ -133,6 +167,22 @@ const Login = () => {
                             label="Password"
                             type="password"
                             id="password"
+                            sx={{
+                                borderRadius: '0',
+                                backgroundColor: 'transparent',
+                                borderBottom: '1px solid #2F80ED',
+                                '& .MuiOutlinedInput-root': {
+                                    '& fieldset': {
+                                        borderColor: 'transparent',
+                                    },
+                                    '&:hover fieldset': {
+                                        borderColor: 'transparent',
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: 'transparent',
+                                    },
+                                },
+                            }}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             autoComplete="current-password"
@@ -141,7 +191,23 @@ const Login = () => {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2, backgroundColor: '#2F80ED' }}
+                            sx={{
+                                mt: 4,
+                                mb: 2,
+                                borderRadius: '30px',
+                                backgroundColor: '#2F80ED',
+                                boxShadow: '0px 10px 20px rgba(47, 128, 237, 0.5)',
+                                color: 'white',
+                                fontWeight: 'bold',
+                                letterSpacing: '1px',
+                                transition: 'all 0.2s ease-in-out',
+                                '&:hover': {
+                                    backgroundColor: '#2F80ED',
+                                    opacity: '0.8',
+                                    transform: 'translateY(-2px)',
+                                    boxShadow: '0px 15px 30px rgba(47, 128, 237, 0.7)',
+                                },
+                            }}
                         >
                             Log In
                         </Button>
