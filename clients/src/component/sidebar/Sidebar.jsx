@@ -114,6 +114,13 @@ export const Sidebar = React.memo(() => {
             ) : (
                 <div className="center">
                     <ul>
+                        <p className="title">MAIN</p>
+                        <Link to="/" style={{ textDecoration: "none" }}>
+                            <li>
+                                <DashboardIcon className='icon' />
+                                <span>Dashboard</span>
+                            </li>
+                        </Link>
                         <p className="title">PAYMENT</p>
                         <Link to="/pembayaran" style={{ textDecoration: "none" }}>
                             <li>

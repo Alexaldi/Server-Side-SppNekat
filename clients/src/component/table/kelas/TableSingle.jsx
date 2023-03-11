@@ -47,7 +47,7 @@ export const ListKelas = ({ id }) => {
             setLoading(false);
         }
     };
-
+    console.log(siswa);
     return (
         <>
             {loading ? (

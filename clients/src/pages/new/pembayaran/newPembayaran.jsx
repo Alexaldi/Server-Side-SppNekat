@@ -105,21 +105,6 @@ const NewPembayaran = () => {
         setPetugasId(response.data.id_petugas)
     }
 
-    const handleClassroomChange = async (e) => {
-        setKelas(e.target.value);
-        try {
-            const studentsByClass = await axios.get(`http://localhost:5000/usersClass/${e.target.value}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${Cookies.get("accessToken")}`
-                    },
-                });
-            setStudents([studentsByClass.data]);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
     const classromm = async () => {
         try {
             const classroom = await axios.get('http://localhost:5000/kelas',
@@ -142,6 +127,21 @@ const NewPembayaran = () => {
                     draggable: true,
                 });
             }
+        }
+    }
+
+    const handleClassroomChange = async (e) => {
+        setKelas(e.target.value);
+        try {
+            const response = await axios.get(`http://localhost:5000/usersClass/${e.target.value}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
+                    },
+                });
+            setStudents(response.data);
+        } catch (error) {
+            console.error(error);
         }
     }
 
@@ -206,6 +206,7 @@ const NewPembayaran = () => {
         }
     }
 
+    console.log(students);
     return (
         <div className="new">
             <Sidebar />
