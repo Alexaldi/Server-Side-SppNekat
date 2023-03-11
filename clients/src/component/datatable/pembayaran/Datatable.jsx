@@ -9,8 +9,6 @@ import Swal from 'sweetalert2';
 import SearchIcon from "@mui/icons-material/Search";
 import { InputAdornment, TextField } from '@mui/material';
 import { PaymentModal } from './PaymentModal';
-import { AppContext } from '../../../store';
-import { useContext } from 'react';
 import Cookies from 'js-cookie';
 
 function CustomToolbar() {
@@ -38,7 +36,6 @@ function CustomToolbar() {
 }
 
 export const DatatablePembayaran = () => {
-    const [state, dispatch] = useContext(AppContext);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
@@ -55,7 +52,7 @@ export const DatatablePembayaran = () => {
             const response = await axios.get('http://localhost:5000/pembayaranJoin',
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             setData(response.data.filter((response) =>
