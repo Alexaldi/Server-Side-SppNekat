@@ -9,6 +9,7 @@ import { toast, ToastContainer } from "react-toastify"
 import Swal from "sweetalert2";
 import { AppContext } from "../../../store";
 import moment from 'moment';
+import Cookies from "js-cookie";
 
 const RupiahFormat = ({ value }) => {
     const formatter = new Intl.NumberFormat("id-ID", {
@@ -35,15 +36,15 @@ const NewPembayaran = () => {
     const navigate = useNavigate()
     useEffect(() => {
         getSpp()
-    }, [state.user_token]);
+    }, []);
 
     useEffect(() => {
         classromm();
         petugasName()
-    }, [state.user_token]);
+    }, []);
     useEffect(() => {
         handleStatus()
-    }, [state.user_token, id_spp, status, bayar]);
+    }, [id_spp, status, bayar]);
 
     const handleAdd = async (e) => {
         e.preventDefault();
@@ -62,7 +63,7 @@ const NewPembayaran = () => {
             },
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             Swal.fire({
@@ -98,7 +99,7 @@ const NewPembayaran = () => {
         const Id = state.petugas_data["nama_petugas"]
         const response = await axios.get(`http://localhost:5000/adminU/${Id}`, {
             headers: {
-                Authorization: `Bearer ${state.user_token}`
+                Authorization: `Bearer ${Cookies.get("accessToken")}`
             },
         })
         setPetugasId(response.data.id_petugas)
@@ -110,7 +111,7 @@ const NewPembayaran = () => {
             const studentsByClass = await axios.get(`http://localhost:5000/usersClass/${e.target.value}`,
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             setStudents([studentsByClass.data]);
@@ -124,7 +125,7 @@ const NewPembayaran = () => {
             const classroom = await axios.get('http://localhost:5000/kelas',
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 })
             setClassroom(classroom.data)
@@ -149,7 +150,7 @@ const NewPembayaran = () => {
             const spp = await axios.get('http://localhost:5000/spp',
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 })
 
@@ -170,18 +171,25 @@ const NewPembayaran = () => {
         }
     }
 
+    const handleNominalChange = (event) => {
+        const rawValue = event.target.value.replace(/\D/g, "");
+        const formattedValue = RupiahFormat({ value: rawValue });
+        setBayar(rawValue);
+        setFormattedNominal(formattedValue);
+    };
+
     const handleStatus = async () => {
         const response = await axios.get(`http://localhost:5000/spp/${id_spp}`,
             {
                 headers: {
-                    Authorization: `Bearer ${state.user_token}`
+                    Authorization: `Bearer ${Cookies.get("accessToken")}`
                 },
             })
 
         const historyPembayaran = await axios.get(`http://localhost:5000/pembayaranS?id_spp=${id_spp}&id_siswa=${id_siswa}`,
             {
                 headers: {
-                    Authorization: `Bearer ${state.user_token}`
+                    Authorization: `Bearer ${Cookies.get("accessToken")}`
                 },
             })
         const Sum = historyPembayaran.data
@@ -190,20 +198,13 @@ const NewPembayaran = () => {
             setStatus(true);
         } else if (Jumlah > response.data.nominal) {
             const sisa = Sum - response.data.nominal;
-            const message = `Anda membayar lebih untuk Tahun ${response.data.tahun}. Tagihan Anda ${sisa === 0 ? 'Sudah Lunas' : `Sisa ${sisa}`}`;
+            const message = `Anda membayar lebih untuk Tahun ${response.data.tahun}. Tagihan Anda ${sisa === 0 ? 'Sudah Lunas' : `Sisa ${formattedNominal(sisa)}`}`;
             setStatus(false);
             throw new Error(message);
         } else {
             setStatus(false);
         }
     }
-
-    const handleNominalChange = (event) => {
-        const rawValue = event.target.value.replace(/\D/g, "");
-        const formattedValue = RupiahFormat({ value: rawValue });
-        setBayar(rawValue);
-        setFormattedNominal(formattedValue);
-    };
 
     return (
         <div className="new">
