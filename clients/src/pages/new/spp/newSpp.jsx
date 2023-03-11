@@ -1,13 +1,13 @@
 import "../new.scss";
 import { Sidebar } from "../../../component/sidebar/Sidebar";
 import { Navbar } from "../../../component/navbar/Navbar";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify"
 import Swal from "sweetalert2";
-import { AppContext } from "../../../store";
+import Cookies from "js-cookie";
 
 const RupiahFormat = ({ value }) => {
     const formatter = new Intl.NumberFormat("id-ID", {
@@ -24,7 +24,6 @@ const NewSpp = () => {
     const [formattedNominal, setFormattedNominal] = useState("");
     const [tahun, setTahun] = useState('');
     const [tahunOptions, setTahunOptions] = useState([]);
-    const [state, dispatch] = useContext(AppContext);
     const navigate = useNavigate()
 
     const handleAdd = async (e) => {
@@ -36,7 +35,7 @@ const NewSpp = () => {
             },
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             Swal.fire({

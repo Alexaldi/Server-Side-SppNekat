@@ -1,13 +1,13 @@
 import "../new.scss";
 import { Sidebar } from "../../../component/sidebar/Sidebar";
 import { Navbar } from "../../../component/navbar/Navbar";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { TextField } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify"
 import Swal from "sweetalert2";
-import { AppContext } from "../../../store";
+import Cookies from "js-cookie";
 
 const NewAdmin = () => {
     const [username, setUsername] = useState('');
@@ -15,7 +15,6 @@ const NewAdmin = () => {
     const [level, setLevel] = useState('petugas');
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
-    const [state, dispatch] = useContext(AppContext);
     const navigate = useNavigate()
 
     const handleAdd = async (e) => {
@@ -30,7 +29,7 @@ const NewAdmin = () => {
             },
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             Swal.fire({
