@@ -1,4 +1,4 @@
-# Spp Nekat JsFramework
+# Spp Nekat Js Framework
 
 Spp Nekat JsFramework is a web-based application that helps users to manage their school financial management system, especially for student payment details. This application is built using JavaScript frameworks, such as React.js for the client-side and Node.js for the server-side.
 
