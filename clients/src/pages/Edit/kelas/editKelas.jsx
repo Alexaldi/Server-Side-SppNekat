@@ -1,18 +1,17 @@
 import "../edit.scss";
 import { Sidebar } from "../../../component/sidebar/Sidebar";
 import { Navbar } from "../../../component/navbar/Navbar";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify"
 import Swal from "sweetalert2";
-import { AppContext } from "../../../store";
+import Cookies from "js-cookie";
 
 const EditKelas = () => {
     const [angkatan, setAngkatan] = useState('');
     const [kelas, setKelas] = useState('');
-    const [state, dispatch] = useContext(AppContext);
     const { kelasId } = useParams();
     const navigate = useNavigate()
 
@@ -29,7 +28,7 @@ const EditKelas = () => {
             },
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             Swal.fire({
@@ -67,7 +66,7 @@ const EditKelas = () => {
             const response = await axios.get(`http://localhost:5000/kelas/${kelasId}`,
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             console.log(response.data);

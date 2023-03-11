@@ -1,15 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "../single.scss"
 import { Sidebar } from "../../../component/sidebar/Sidebar"
 import { Navbar } from "../../../component/navbar/Navbar"
 import axios from 'axios'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { ListKelas } from '../../../component/table/kelas/TableSingle'
 import { ListSpp } from '../../../component/table/spp/TableSingle'
-import { AppContext } from '../../../store'
+import Cookies from 'js-cookie'
 
 export const SingleSpp = () => {
-    const [state, dispatch] = useContext(AppContext);
     const { sppId } = useParams();
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -23,7 +21,7 @@ export const SingleSpp = () => {
             const response = await axios.get(`http://localhost:5000/spp/${sppId}`,
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             setData(response.data);

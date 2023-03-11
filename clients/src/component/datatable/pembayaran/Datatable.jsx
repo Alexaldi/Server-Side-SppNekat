@@ -11,6 +11,7 @@ import { InputAdornment, TextField } from '@mui/material';
 import { PaymentModal } from './PaymentModal';
 import { AppContext } from '../../../store';
 import { useContext } from 'react';
+import Cookies from 'js-cookie';
 
 function CustomToolbar() {
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -106,7 +107,7 @@ export const DatatablePembayaran = () => {
                     const response = await axios.delete(`http://localhost:5000/pembayaran/${id}`,
                         {
                             headers: {
-                                Authorization: `Bearer ${state.user_token}`
+                                Authorization: `Bearer ${Cookies.get("accessToken")}`
                             },
                         });
                     toast.success(response.data.message);

@@ -1,18 +1,18 @@
 import "../new.scss";
 import { Sidebar } from "../../../component/sidebar/Sidebar";
 import { Navbar } from "../../../component/navbar/Navbar";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { TextField } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify"
 import Swal from "sweetalert2";
-import { AppContext } from "../../../store";
+import Cookies from "js-cookie";
+
 
 const NewKelas = () => {
     const [angkatan, setAngkatan] = useState('');
     const [kelas, setKelas] = useState('');
-    const [state, dispatch] = useContext(AppContext);
     const navigate = useNavigate()
 
     const handleAdd = async (e) => {
@@ -24,7 +24,7 @@ const NewKelas = () => {
             },
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             Swal.fire({

@@ -1,5 +1,5 @@
 import "../table.scss";
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,11 +11,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { AppContext } from "../../../store";
-
+import Cookies from "js-cookie";
 
 export const ListKelas = ({ id }) => {
-    const [state, dispatch] = useContext(AppContext);
     const [siswa, setSiswa] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -31,7 +29,7 @@ export const ListKelas = ({ id }) => {
                 `http://localhost:5000/usersClass/${id}`,
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 }
             );

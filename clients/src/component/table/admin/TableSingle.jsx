@@ -10,13 +10,13 @@ import Paper from "@mui/material/Paper";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Typography } from "@mui/material";
-import { AppContext } from "../../../store";
 import { useNavigate } from "react-router";
+import Cookies from "js-cookie";
 
 
 export const ListAdmin = ({ id }) => {
     const [pembayaran, setPembayaran] = useState([]);
-    const [state, dispatch] = useContext(AppContext);
+
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -29,7 +29,7 @@ export const ListAdmin = ({ id }) => {
                 `http://localhost:5000/pembayaranA/${id}?limit=10&orderBy=desc`,
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 }
             );

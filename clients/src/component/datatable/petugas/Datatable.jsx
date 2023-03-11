@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "../datatable.scss"
 import { DataGrid } from '@mui/x-data-grid';
 import { petugasColoums } from '../../../helper/table/petugas/datatablesource';
@@ -8,13 +8,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, InputAdornment, TextField } from '@mui/material';
-import { AppContext } from '../../../store';
+import Cookies from 'js-cookie';
 
 export const DatatableAdmin = () => {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
-    const [state, dispatch] = useContext(AppContext);
     useEffect(() => {
         getAdmin();
     }, [searchQuery]);
@@ -26,7 +25,7 @@ export const DatatableAdmin = () => {
             const response = await axios.get('http://localhost:5000/admin',
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             setData(response.data.filter((item) =>
@@ -68,7 +67,7 @@ export const DatatableAdmin = () => {
                     const response = await axios.delete(`http://localhost:5000/admin/${id}`,
                         {
                             headers: {
-                                Authorization: `Bearer ${state.user_token}`
+                                Authorization: `Bearer ${Cookies.get("accessToken")}`
                             },
                         });
                     toast.success(response.data.message);
