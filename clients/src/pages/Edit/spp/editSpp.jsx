@@ -1,13 +1,13 @@
 import "../edit.scss";
 import { Sidebar } from "../../../component/sidebar/Sidebar";
 import { Navbar } from "../../../component/navbar/Navbar";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify"
 import Swal from "sweetalert2";
-import { AppContext } from "../../../store";
+import Cookies from "js-cookie";
 
 const RupiahFormat = ({ value }) => {
     const formatter = new Intl.NumberFormat("id-ID", {
@@ -20,7 +20,6 @@ const RupiahFormat = ({ value }) => {
 };
 
 const EditSpp = () => {
-    const [state, dispatch] = useContext(AppContext);
     const [nominal, setNominal] = useState('');
     const [formattedNominal, setFormattedNominal] = useState("");
     const [tahun, setTahun] = useState('');
@@ -40,7 +39,7 @@ const EditSpp = () => {
             },
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             Swal.fire({
@@ -84,7 +83,7 @@ const EditSpp = () => {
             const response = await axios.get(`http://localhost:5000/spp/${sppId}`,
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             setNominal(response.data.nominal);

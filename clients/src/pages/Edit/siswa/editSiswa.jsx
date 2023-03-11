@@ -1,13 +1,13 @@
 import "../edit.scss";
 import { Sidebar } from "../../../component/sidebar/Sidebar";
 import { Navbar } from "../../../component/navbar/Navbar";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify"
 import Swal from "sweetalert2";
-import { AppContext } from "../../../store";
+import Cookies from "js-cookie";
 
 const EditSiswa = () => {
     const [nisn, setNisn] = useState('');
@@ -19,15 +19,13 @@ const EditSiswa = () => {
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
     const [classroom, setClassroom] = useState([]);
-    const [state, dispatch] = useContext(AppContext);
-    console.log(classroom);
 
     const { userId } = useParams();
     const navigate = useNavigate()
 
     useEffect(() => {
         classromm();
-    }, [state.user_token]);
+    }, []);
 
     useEffect(() => {
         getSiswa(userId);
@@ -48,7 +46,7 @@ const EditSiswa = () => {
             },
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 }
             );
@@ -91,7 +89,7 @@ const EditSiswa = () => {
             const response = await axios.get(`http://localhost:5000/usersa/${userId}`,
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             console.log(response.data);
@@ -121,7 +119,7 @@ const EditSiswa = () => {
             const classroom = await axios.get('http://localhost:5000/kelas',
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 })
             setClassroom(classroom.data)

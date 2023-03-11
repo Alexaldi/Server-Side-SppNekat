@@ -1,13 +1,13 @@
 import "../edit.scss";
 import { Sidebar } from "../../../component/sidebar/Sidebar";
 import { Navbar } from "../../../component/navbar/Navbar";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify"
 import Swal from "sweetalert2";
-import { AppContext } from "../../../store";
+import Cookies from "js-cookie";
 
 const EditAdmin = () => {
     const [username, setUsername] = useState('');
@@ -15,7 +15,6 @@ const EditAdmin = () => {
     const [level, setLevel] = useState('petugas');
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
-    const [state, dispatch] = useContext(AppContext);
     const { adminId } = useParams();
     const navigate = useNavigate()
 
@@ -35,7 +34,7 @@ const EditAdmin = () => {
             },
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             Swal.fire({
@@ -70,7 +69,7 @@ const EditAdmin = () => {
             const response = await axios.get(`http://localhost:5000/admin/${userId}`,
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             console.log(response.data);
