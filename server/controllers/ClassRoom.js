@@ -16,12 +16,12 @@ export const getClassRooms = async (req, res) => {
 
 export const getClassRoomById = async (req, res) => {
     try {
-        const response = await ClassRoom.findAll({
+        const response = await ClassRoom.findOne({
             where: {
                 id_kelas: req.params.id_kelas
             }
         });
-        res.json(response[0]);
+        res.json(response);
     } catch (error) {
         res.json({ message: error.message });
     }

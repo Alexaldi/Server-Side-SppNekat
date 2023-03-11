@@ -34,7 +34,7 @@ export const getUsersById = async (req, res) => {
 
 export const getUsersByKelas = async (req, res) => {
     try {
-        const siswa = await Siswa.findOne({
+        const siswa = await Siswa.findAll({
             attributes: ['id_siswa', 'nisn', 'name', 'id_kelas', 'alamat', 'no_telp', 'email'],
             where: { id_kelas: req.params.id_kelas },
             include: { model: ClassRoom, as: 'kelas', attributes: ['angkatan', 'kelas'] },

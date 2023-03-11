@@ -109,8 +109,8 @@ export const PaymentModal = ({ id, isOpen, onClose }) => {
                         <Text style={styles.info}>{data.spp?.tahun}</Text>
                     </View>
                     <View>
-                        <Text style={styles.subtitle}>Status:</Text>
-                        <Text style={styles.info}>{data.status === true ? 'Lunas' : 'Belum Lunas'}</Text>
+                        <Text style={styles.subtitle}>Nama Petugas:</Text>
+                        <Text style={styles.info}>{data.petugas?.nama_petugas}</Text>
                     </View>
                     <View style={styles.receipt}>
                         <Text style={styles.receiptLabel}>Total Pembayaran:</Text>
@@ -124,8 +124,8 @@ export const PaymentModal = ({ id, isOpen, onClose }) => {
                         </Text>
                     </View>
                     <View>
-                        <Text style={styles.subtitle}>Nama Petugas:</Text>
-                        <Text style={styles.info}>{data.petugas?.nama_petugas}</Text>
+                        <Text style={styles.subtitle}>Status:</Text>
+                        <Text style={styles.info}>{data.status === true ? 'Lunas' : 'Belum Lunas'}</Text>
                     </View>
                 </Page>
             </Document>

@@ -33,7 +33,7 @@ export const SingleKelas = () => {
             }
         }
     };
-
+    console.log(data);
     return (
         <div className='single'>
             <Sidebar />

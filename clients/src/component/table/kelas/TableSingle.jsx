@@ -35,7 +35,7 @@ export const ListKelas = ({ id }) => {
                     },
                 }
             );
-            setSiswa([response.data]);
+            setSiswa(response.data);
             setLoading(false);
         } catch (error) {
             if (error.response) {
