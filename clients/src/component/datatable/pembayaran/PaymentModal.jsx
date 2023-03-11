@@ -162,7 +162,7 @@ export const PaymentModal = ({ id, isOpen, onClose }) => {
                         </Grid>
                         <Grid item xs={6}>
                             <Typography variant="subtitle2">Payment Date:</Typography>
-                            <Typography variant="body1" sx={{ fontSize: '1.2rem', fontWeight: 'bold' }} >{data.tgl_bayar}</Typography>
+                            <Typography variant="body1" sx={{ fontSize: '1.2rem', fontWeight: 'bold' }} >{formatDate(data.tgl_bayar)}</Typography>
                         </Grid>
                         <Grid item xs={6}>
                             <Typography variant="subtitle2">Tahun Pembayaran:</Typography>
