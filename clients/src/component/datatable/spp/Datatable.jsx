@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "../datatable.scss"
 import { DataGrid } from '@mui/x-data-grid';
 import { sppColoums } from '../../../helper/table/spp/datatablesource';
@@ -7,10 +7,9 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { Box } from '@mui/material';
-import { AppContext } from '../../../store';
+import Cookies from 'js-cookie';
 
 export const DatatableSpp = () => {
-    const [state, dispatch] = useContext(AppContext);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
@@ -24,7 +23,7 @@ export const DatatableSpp = () => {
             const response = await axios.get('http://localhost:5000/spp',
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             setData(response.data);
@@ -58,7 +57,7 @@ export const DatatableSpp = () => {
                     const response = await axios.delete(`http://localhost:5000/spp/${id}`,
                         {
                             headers: {
-                                Authorization: `Bearer ${state.user_token}`
+                                Authorization: `Bearer ${Cookies.get("accessToken")}`
                             },
                         });
                     console.log(response);

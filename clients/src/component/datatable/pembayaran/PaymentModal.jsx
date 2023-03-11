@@ -1,12 +1,11 @@
 import { Dialog, DialogTitle, DialogContent, DialogContentText, Typography, Grid, IconButton, DialogActions, Button } from "@mui/material";
 import { Document, Page, Text, View, StyleSheet, pdf } from "@react-pdf/renderer"
 import { GridCloseIcon } from "@mui/x-data-grid";
-import { saveAs } from 'file-saver';
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import "./patmod.scss"
 import { AppContext } from "../../../store";
-
+import Cookies from "js-cookie"
 const styles = StyleSheet.create({
     page: {
         padding: 40, // increase padding to make the content more compact
@@ -66,7 +65,7 @@ export const PaymentModal = ({ id, isOpen, onClose }) => {
         const response = await axios.get(`http://localhost:5000/pembayaranM/${id}`,
             {
                 headers: {
-                    Authorization: `Bearer ${state.user_token}`
+                    Authorization: `Bearer ${Cookies.get("accessToken")}`
                 },
             });
         setData(response.data);

@@ -7,10 +7,9 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { Box } from '@mui/material';
-import { AppContext } from '../../../store';
+import Cookies from 'js-cookie';
 
 export const DatatableKelas = () => {
-    const [state, dispatch] = useContext(AppContext);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
@@ -24,7 +23,7 @@ export const DatatableKelas = () => {
             const response = await axios.get('http://localhost:5000/kelas',
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             setData(response.data);
@@ -59,7 +58,7 @@ export const DatatableKelas = () => {
                     const response = await axios.delete(`http://localhost:5000/kelas/${id}`,
                         {
                             headers: {
-                                Authorization: `Bearer ${state.user_token}`
+                                Authorization: `Bearer ${Cookies.get("accessToken")}`
                             },
                         });
                     toast.success(response.data.message);
