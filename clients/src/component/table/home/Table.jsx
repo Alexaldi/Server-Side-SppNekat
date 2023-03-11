@@ -1,5 +1,5 @@
 import "../table.scss";
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,17 +8,15 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
-import { AppContext } from "../../../store"
 import { useNavigate } from "react-router";
 import { Typography } from "@mui/material";
-
+import Cookies from "js-cookie";
 
 export const List = () => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const navigate = useNavigate()
 
-    const [state, dispatch] = useContext(AppContext);
     useEffect(() => {
         getPembayaran();
     }, []);
@@ -28,7 +26,7 @@ export const List = () => {
             const response = await axios.get('http://localhost:5000/pembayaranJoin',
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 }
             );
