@@ -1,16 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "../single.scss"
 import { Sidebar } from "../../../component/sidebar/Sidebar"
 import { Navbar } from "../../../component/navbar/Navbar"
 import { ListAdmin } from '../../../component/table/admin/TableSingle'
 import axios from 'axios'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { AppContext } from '../../../store'
+import Cookies from 'js-cookie'
 
 export const SingleAdmin = () => {
     const { adminId } = useParams();
     const [data, setData] = useState([]);
-    const [state, dispatch] = useContext(AppContext);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -24,7 +23,7 @@ export const SingleAdmin = () => {
             const response = await axios.get(`http://localhost:5000/admin/${adminId}`,
                 {
                     headers: {
-                        Authorization: `Bearer ${state.user_token}`
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 });
             setData(response.data);

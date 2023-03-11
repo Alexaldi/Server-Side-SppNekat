@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "../single.scss"
 import { Sidebar } from "../../../component/sidebar/Sidebar"
 import { Navbar } from "../../../component/navbar/Navbar"
@@ -6,13 +6,12 @@ import axios from 'axios'
 import { useNavigate, useParams } from 'react-router'
 import { ListSiswa } from '../../../component/table/siswa/TableSingle'
 import { Link } from 'react-router-dom'
-import { AppContext } from '../../../store'
+import Cookies from 'js-cookie'
 
 export const SingleSiswa = () => {
     const { userId } = useParams();
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [state, dispatch] = useContext(AppContext);
 
     const navigate = useNavigate()
 
@@ -24,7 +23,7 @@ export const SingleSiswa = () => {
         try {
             const response = await axios.get(`http://localhost:5000/usersa/${userId}`, {
                 headers: {
-                    Authorization: `Bearer ${state.user_token}`
+                    Authorization: `Bearer ${Cookies.get("accessToken")}`
                 },
             });
             setData(response.data);
