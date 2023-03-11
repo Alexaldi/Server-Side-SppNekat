@@ -197,8 +197,8 @@ const NewPembayaran = () => {
         if (Jumlah === response.data.nominal) {
             setStatus(true);
         } else if (Jumlah > response.data.nominal) {
-            const sisa = Sum - response.data.nominal;
-            const message = `Anda membayar lebih untuk Tahun ${response.data.tahun}. Tagihan Anda ${sisa === 0 ? 'Sudah Lunas' : `Sisa ${formattedNominal(sisa)}`}`;
+            const sisa = response.data.nominal - Sum;
+            const message = `Anda membayar lebih untuk Tahun ${response.data.tahun}. Tagihan Anda ${sisa === 0 ? 'Sudah Lunas' : `Sisa ${RupiahFormat({ value: sisa })}`}`;
             setStatus(false);
             throw new Error(message);
         } else {
@@ -206,7 +206,6 @@ const NewPembayaran = () => {
         }
     }
 
-    console.log(students);
     return (
         <div className="new">
             <Sidebar />
@@ -275,7 +274,7 @@ const NewPembayaran = () => {
                                     >
                                         {spp.map((spp) => (
                                             <MenuItem key={spp.id_spp || ''} value={spp.id_spp || ''}>
-                                                {spp.tahun || ''}
+                                                {spp.tahun || ''} - {RupiahFormat({ value: spp.nominal }) || ''}
                                             </MenuItem>
                                         ))}
                                     </Select>
