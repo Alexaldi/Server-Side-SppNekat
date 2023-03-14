@@ -42,6 +42,9 @@ const Pembayaran = db.define('pembayaran', {
     jumlah_bayar: {
         type: DataTypes.INTEGER
     },
+    keterangan: {
+        type: DataTypes.STRING(50)
+    },
     status: {
         type: DataTypes.BOOLEAN
     },

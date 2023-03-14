@@ -73,6 +73,7 @@ export const List = () => {
                                     <TableCell className="tableCell">Tahun Dibayar</TableCell>
                                     <TableCell className="tableCell">Nominal</TableCell>
                                     <TableCell className="tableCell">Nama Petugas</TableCell>
+                                    <TableCell className="tableCell">Keterangan</TableCell>
                                     <TableCell className="tableCell">Status</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -90,6 +91,7 @@ export const List = () => {
                                             minimumFractionDigits: 0,
                                         })}</TableCell>
                                         <TableCell className="tableCell">{row.petugas.nama_petugas}</TableCell>
+                                        <TableCell className="tableCell">{row.keterangan}</TableCell>
                                         <TableCell className="tableCell">
                                             <span className={`status ${row.status === true ? 'Lunas' : 'Belum-Lunas'}`}>{row.status === true ? 'Lunas' : 'Belum Lunas'}</span>
                                         </TableCell>

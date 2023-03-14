@@ -26,6 +26,7 @@ export const getPembayaranById = async (req, res) => {
                 'tgl_bayar',
                 'id_spp',
                 'jumlah_bayar',
+                'keterangan',
                 'status'
             ],
             include: [
@@ -71,6 +72,7 @@ export const getPembayaranByM = async (req, res) => {
                 'tgl_bayar',
                 'id_spp',
                 'jumlah_bayar',
+                'keterangan',
                 'status'
             ],
             include: [
@@ -116,6 +118,7 @@ export const getPembayaranByAdmin = async (req, res) => {
                 'tgl_bayar',
                 'id_spp',
                 'jumlah_bayar',
+                'keterangan',
                 'status'
             ],
             include: [
@@ -163,6 +166,7 @@ export const getPembayaranBySpp = async (req, res) => {
                 'tgl_bayar',
                 'id_spp',
                 'jumlah_bayar',
+                'keterangan',
                 'status'
             ],
             include: [
@@ -219,6 +223,7 @@ export const getPembayaranWithJoin = async (req, res) => {
                 'tgl_bayar',
                 'id_spp',
                 'jumlah_bayar',
+                'keterangan',
                 'status'
             ],
             include: [
@@ -260,6 +265,7 @@ export const createPembayaran = async (req, res) => {
     const id_spp = req.body.id_spp
     const jumlah_bayar = req.body.bayar
     const id_kelas = req.body.id_kelas
+    const keterangan = req.body.keterangan
     const status = req.body.status
 
     try {
@@ -270,6 +276,7 @@ export const createPembayaran = async (req, res) => {
             id_spp,
             id_kelas,
             jumlah_bayar,
+            keterangan,
             status
         });
 

@@ -78,6 +78,14 @@ export const pembayaranColoums = [
         }
     },
     {
+        field: 'keterangan',
+        headerName: 'Keterangan',
+        width: 140,
+        valueGetter: (params) => {
+            return params.value
+        }
+    },
+    {
         field: 'status',
         headerName: 'Status',
         width: 120,

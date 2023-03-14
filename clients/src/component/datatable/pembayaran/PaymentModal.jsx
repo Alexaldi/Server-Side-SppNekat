@@ -104,6 +104,10 @@ export const PaymentModal = ({ id, isOpen, onClose }) => {
                         <Text style={styles.info}>{formatDate(data.tgl_bayar)}</Text>
                     </View>
                     <View>
+                        <Text style={styles.subtitle}>Keterangan:</Text>
+                        <Text style={styles.info}>{data.keterangan}</Text>
+                    </View>
+                    <View>
                         <Text style={styles.subtitle}>Tahun Pembayaran:</Text>
                         <Text style={styles.info}>{data.spp?.tahun}</Text>
                     </View>
@@ -166,6 +170,10 @@ export const PaymentModal = ({ id, isOpen, onClose }) => {
                         <Grid item xs={6}>
                             <Typography variant="subtitle2">Tahun Pembayaran:</Typography>
                             <Typography variant="body1" sx={{ fontSize: '1.2rem', fontWeight: 'bold' }} >{data.spp?.tahun}</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography variant="subtitle2">Keterangan:</Typography>
+                            <Typography variant="body1" sx={{ fontSize: '1.2rem', fontWeight: 'bold' }} >{data.keterangan}</Typography>
                         </Grid>
                         <Grid item xs={6}>
                             <Typography variant="subtitle2">Total Pembayaran:</Typography>

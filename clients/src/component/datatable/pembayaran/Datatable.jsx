@@ -27,6 +27,7 @@ function CustomToolbar() {
                         'tgl_bayar',
                         'jumlah_bayar',
                         'nama_petugas',
+                        'keterangan',
                         'status'
                     ],
                     fileName: `DataPembayaran-${date}` // Set CSV file name
