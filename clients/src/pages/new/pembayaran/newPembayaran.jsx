@@ -32,6 +32,7 @@ const NewPembayaran = () => {
     const [classroom, setClassroom] = useState([]);
     const [students, setStudents] = useState([]);
     const [spp, setSpp] = useState([]);
+    const [keterangan, setKeterangan] = useState('');
     const [status, setStatus] = useState(false);
     const navigate = useNavigate()
     useEffect(() => {
@@ -286,6 +287,19 @@ const NewPembayaran = () => {
                                     label="Total Bayar"
                                     value={formattedNominal}
                                     onChange={handleNominalChange}
+                                    fullWidth
+                                    required
+                                    type="text"
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                        <div className="form-group col">
+                                <TextField
+                                    id="total"
+                                    label="Total Bayar"
+                                    value={keterangan}
+                                    onChange={(e)=> setKeterangan}
                                     fullWidth
                                     required
                                     type="text"
