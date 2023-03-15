@@ -4,7 +4,7 @@ import { Navbar } from "../../../component/navbar/Navbar";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify"
 import Swal from "sweetalert2";
 import { AppContext } from "../../../store";
@@ -294,16 +294,20 @@ const NewPembayaran = () => {
                             </div>
                         </div>
                         <div className="form-row">
-                        <div className="form-group col">
+                            <div className="form-group col">
                                 <TextField
-                                    id="total"
-                                    label="Total Bayar"
+                                    id="keterangan"
+                                    label="Keterangan"
                                     value={keterangan}
-                                    onChange={(e)=> setKeterangan}
+                                    onChange={(e) => setKeterangan(e.target.value)}
                                     fullWidth
                                     required
+                                    helperText="Keterangan Bulan bayar"
                                     type="text"
                                 />
+                            </div>
+                            <div className="form-group col">
+                                <Box fullWidth></Box>
                             </div>
                         </div>
                         <div className="button-container">

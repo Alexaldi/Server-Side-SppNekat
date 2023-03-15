@@ -126,25 +126,19 @@ export const Login = async (req, res) => {
         if (!match) return res.status(400).json({ msg: "Wrong Password" });
         const id_siswa = siswa[0].id_siswa
         const nisn = siswa[0].nisn
-        const nama = siswa[0].nama
+        const nama = siswa[0].name
         const id_kelas = siswa[0].id_kelas
         const alamat = siswa[0].alamat
         const no_telp = siswa[0].no_telp
         const email = siswa[0].email
         const accessToken = jwt.sign({ id_siswa, nisn, nama, id_kelas, alamat, no_telp, email }, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: '20s'
+            expiresIn: '7d'
         });
-        const refreshToken = jwt.sign({ id_siswa, nisn, nama, id_kelas, alamat, no_telp, email }, process.env.REFRESH_TOKEN_SECRET, {
-            expiresIn: '1d'
-        });
-        await Siswa.update({ refresh_token: refreshToken }, {
+
+        await Siswa.update({ refresh_token: accessToken }, {
             where: {
                 id_siswa: id_siswa
             }
-        });
-        res.cookie('refreshToken', refreshToken, {
-            httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000
         });
         res.json({ accessToken });
     } catch (error) {

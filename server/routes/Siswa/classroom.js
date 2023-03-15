@@ -8,7 +8,7 @@ import { refreshToken } from "../../controllers/RefreshToken.js";
 
 const routerClassB = express.Router();
 
-routerClassB.get('/products', verifyToken, getClassRooms);
-routerClassB.get('/products/:id_kelas', verifyToken, getClassRoomById);
+routerClassB.get('/class', verifyToken, getClassRooms);
+routerClassB.get('/class/:id_kelas', verifyToken, getClassRoomById);
 routerClassB.get('/token', refreshToken);
 export default routerClassB;
