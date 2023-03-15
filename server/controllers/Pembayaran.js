@@ -3,6 +3,7 @@ import Petugas from "../models/Petugas.js";
 import Siswa from "../models/SiswaModel.js"
 import ClassRoom from "../models/ClassRoom.js";
 import Spp from "../models/SppModel.js";
+import db from "../config/Database.js";
 export const getPembayaran = async (req, res) => {
     try {
         const pembayaran = await Pembayaran.findAll();
@@ -270,7 +271,7 @@ export const createPembayaran = async (req, res) => {
     const status = req.body.status
 
     try {
-        await sequelize.transaction(async (t) => {
+        await db.transaction(async (t) => {
             await Pembayaran.create({
                 id_petugas,
                 id_siswa,
@@ -282,9 +283,7 @@ export const createPembayaran = async (req, res) => {
                 status
             }, { transaction: t });
 
-            res.status(201).json({
-                msg: "Pembayaran Berhasil"
-            }, { transaction: t })
+            res.status(201).json({ msg: "Pembayaran Berhasil" })
         })
     } catch (error) {
         res.json({ message: error.message });

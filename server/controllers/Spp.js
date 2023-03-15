@@ -56,7 +56,7 @@ export const createSpp = async (req, res) => {
 
 export const updateSpp = async (req, res) => {
     try {
-        await sequelize.transaction(async (t) => {
+        await db.transaction(async (t) => {
             await Spp.update(req.body, {
                 where: {
                     id_spp: req.params.id_spp
