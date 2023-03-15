@@ -270,19 +270,21 @@ export const createPembayaran = async (req, res) => {
     const status = req.body.status
 
     try {
-        await Pembayaran.create({
-            id_petugas,
-            id_siswa,
-            tgl_bayar,
-            id_spp,
-            id_kelas,
-            jumlah_bayar,
-            keterangan,
-            status
-        });
+        await sequelize.transaction(async (t) => {
+            await Pembayaran.create({
+                id_petugas,
+                id_siswa,
+                tgl_bayar,
+                id_spp,
+                id_kelas,
+                jumlah_bayar,
+                keterangan,
+                status
+            }, { transaction: t });
 
-        res.status(201).json({
-            msg: "Pembayaran Berhasil"
+            res.status(201).json({
+                msg: "Pembayaran Berhasil"
+            }, { transaction: t })
         })
     } catch (error) {
         res.json({ message: error.message });

@@ -150,22 +150,19 @@ export const deletePetugas = async (req, res) => {
 
 export const Logout = async (req, res) => {
     const accessToken = req.query.accessToken;
-    console.group("auth")
-    console.log(accessToken);
+
     if (!accessToken) return res.sendStatus(204);
     const petugas = await Petugas.findAll({
         where: {
             refresh_token: accessToken
         }
     });
-    console.log(petugas);
-    console.groupEnd()
-    // if (!petugas[0]) return res.sendStatus(204);
-    // const id_petugas = petugas[0].id_petugas
-    // await Petugas.update({ refresh_token: null }, {
-    //     where: {
-    //         id_petugas: id_petugas
-    //     }
-    // });
+    if (!petugas[0]) return res.sendStatus(204);
+    const id_petugas = petugas[0].id_petugas
+    await Petugas.update({ refresh_token: null }, {
+        where: {
+            id_petugas: id_petugas
+        }
+    });
     return res.sendStatus(200);
 }

@@ -1,3 +1,4 @@
+import db from "../config/Database.js";
 import Spp from "../models/SppModel.js";
 export const getSpp = async (req, res) => {
     try {
@@ -26,27 +27,28 @@ export const createSpp = async (req, res) => {
     const tahun = req.body.tahun
 
     try {
+        await db.transaction(async (t) => {
+            const existingSpp = await Spp.findOne(
+                {
+                    where: {
+                        tahun
+                    }
+                }, { transaction: t });
+            if (existingSpp) {
+                return res.status(400).json({
+                    msg: `Nominal tahun ${tahun} sudah ada`,
+                });
+            }
 
-        const existingSpp = await Spp.findOne(
-            {
-                where: {
-                    tahun
-                }
-            });
-        console.log(existingSpp);
-        if (existingSpp) {
-            return res.status(400).json({
-                msg: `Nominal tahun ${tahun} sudah ada`,
-            });
-        }
-
-        await Spp.create({
-            nominal,
-            tahun
-        });
-        res.status(201).json({
-            msg: "Spp Berhasil Dibuat"
+            await Spp.create({
+                nominal,
+                tahun
+            }, { transaction: t });
+            res.status(201).json({
+                msg: "Spp Berhasil Dibuat"
+            })
         })
+
     } catch (error) {
         res.json({ message: error.message });
     }
@@ -54,14 +56,16 @@ export const createSpp = async (req, res) => {
 
 export const updateSpp = async (req, res) => {
     try {
-        await Spp.update(req.body, {
-            where: {
-                id_spp: req.params.id_spp
-            }
-        });
-        res.json({
-            "message": "Spp Telah Di Edit"
-        });
+        await sequelize.transaction(async (t) => {
+            await Spp.update(req.body, {
+                where: {
+                    id_spp: req.params.id_spp
+                }
+            }, { transaction: t });
+            res.json({
+                "message": "Spp Telah Di Edit"
+            }, { transaction: t });
+        })
     } catch (error) {
         res.json({ message: error.message });
     }

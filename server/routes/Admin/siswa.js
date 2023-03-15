@@ -10,4 +10,5 @@ routerSiswaA.patch('/usersa/:id_siswa', authRoleA, EditSiswa);
 routerSiswaA.get('/usersClass/:id_kelas', authRoleB, getUsersByKelas);
 routerSiswaA.get('/usersa/:id_siswa', authRoleB, getUsersById);
 routerSiswaA.delete('/usersa/:id_siswa', authRoleB, deleteSiswa);
+
 export default routerSiswaA;

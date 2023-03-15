@@ -164,11 +164,12 @@ export const deleteSiswa = async (req, res) => {
 }
 
 export const Logout = async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (!refreshToken) return res.sendStatus(204);
+    const accessToken = req.query.accessToken;
+
+    if (!accessToken) return res.sendStatus(204);
     const siswa = await Siswa.findAll({
         where: {
-            refresh_token: refreshToken
+            refresh_token: accessToken
         }
     });
     if (!siswa[0]) return res.sendStatus(204);
@@ -178,6 +179,5 @@ export const Logout = async (req, res) => {
             id_siswa: id_siswa
         }
     });
-    res.clearCookie('refreshToken');
     return res.sendStatus(200);
 }

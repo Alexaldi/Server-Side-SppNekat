@@ -83,10 +83,6 @@ const Login = () => {
 
     return (
         <>
-            {/* <div class="ocean">
-                <div class="wave"></div>
-                <div class="wave"></div>
-            </div> */}
             <div className="login-container">
                 <ToastContainer />
                 <Box
@@ -103,12 +99,6 @@ const Login = () => {
                         position: 'relative',
                         zIndex: 1,
                         border: '1px solid #E5E5E5',
-                        '@media screen and (max-width: 768px)': {
-                            padding: '20px',
-                        },
-                        '@media screen and (max-width: 480px)': {
-                            maxWidth: '300px',
-                        }
                     }}
                 >
                     <Typography
