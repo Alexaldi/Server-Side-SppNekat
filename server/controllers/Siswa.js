@@ -114,15 +114,14 @@ export const EditSiswa = async (req, res) => {
 }
 
 export const Login = async (req, res) => {
-    console.log(req.body.nisn);
-    console.log(req.body.password);
+    const { nisn, password } = req.body
     try {
         const siswa = await Siswa.findAll({
             where: {
                 nisn: req.body.nisn
             }
         });
-        const match = await bcrypt.compare(req.body.password, siswa[0].password);
+        const match = await bcrypt.compare(password, siswa[0].password);
         if (!match) return res.status(400).json({ msg: "Wrong Password" });
         const id_siswa = siswa[0].id_siswa
         const nisn = siswa[0].nisn

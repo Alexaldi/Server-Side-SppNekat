@@ -4,7 +4,7 @@ import { Navbar } from "../../../component/navbar/Navbar";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Autocomplete, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify"
 import Swal from "sweetalert2";
 import { AppContext } from "../../../store";
@@ -23,10 +23,8 @@ const RupiahFormat = ({ value }) => {
 
 const NewPembayaran = () => {
     const [state, dispatch] = useContext(AppContext);
-    const [petugasId, setPetugasId] = useState(null);
     const [id_siswa, setId_siswa] = useState('');
     const [id_spp, setId_spp] = useState('');
-    const [kelas, setKelas] = useState('');
     const [bayar, setBayar] = useState('');
     const [formattedNominal, setFormattedNominal] = useState("");
     const [classroom, setClassroom] = useState([]);
@@ -34,33 +32,37 @@ const NewPembayaran = () => {
     const [spp, setSpp] = useState([]);
     const [keterangan, setKeterangan] = useState('');
     const [status, setStatus] = useState(false);
+    const [valueKelas, setValueKelas] = useState('');
+    const [sisa, setSisa] = useState('');
     const navigate = useNavigate()
     useEffect(() => {
         getSpp()
     }, []);
 
     useEffect(() => {
-        classromm();
-        petugasName()
-    }, []);
+        getSiswa()
+        if (id_siswa) {
+            classromm();;
+        }
+    }, [id_siswa]);
+
     useEffect(() => {
         handleStatus()
-    }, [id_spp, status, bayar]);
+    }, [id_spp, id_siswa, status, bayar, sisa]);
 
     const handleAdd = async (e) => {
         e.preventDefault();
         try {
             await handleStatus();
             const tgl_bayar = moment().format('YYYY-MM-DD');;
-            console.log(tgl_bayar);
             await axios.post(`http://localhost:5000/pembayaranA`, {
-                id_petugas: petugasId,
+                id_petugas: state.petugas_data["id_petugas"],
                 tgl_bayar,
                 id_siswa,
                 keterangan,
                 id_spp,
                 bayar,
-                kelas,
+                kelas: classroom,
                 status
             },
                 {
@@ -97,28 +99,25 @@ const NewPembayaran = () => {
 
     }
 
-    const petugasName = async () => {
-        const Id = state.petugas_data["nama_petugas"]
-        const response = await axios.get(`http://localhost:5000/adminU/${Id}`, {
-            headers: {
-                Authorization: `Bearer ${Cookies.get("accessToken")}`
-            },
-        })
-        setPetugasId(response.data.id_petugas)
-    }
-
     const classromm = async () => {
         try {
-            const classroom = await axios.get('http://localhost:5000/kelas',
+            const siswa = await axios.get(`http://localhost:5000/usersa/${id_siswa}`,
                 {
                     headers: {
                         Authorization: `Bearer ${Cookies.get("accessToken")}`
                     },
                 })
-            setClassroom(classroom.data)
 
+            const classroom = await axios.get(`http://localhost:5000/kelas/${siswa.data.id_kelas}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
+                    },
+                })
+            const data = `${classroom.data.angkatan} ${classroom.data.kelas}`
+            setClassroom(classroom.data.id_kelas)
+            setValueKelas(data)
         } catch (error) {
-
             if (error.response) {
                 toast.error("Data Kelas error", {
                     position: toast.POSITION.TOP_CENTER,
@@ -132,10 +131,9 @@ const NewPembayaran = () => {
         }
     }
 
-    const handleClassroomChange = async (e) => {
-        setKelas(e.target.value);
+    const getSiswa = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/usersClass/${e.target.value}`,
+            const response = await axios.get(`http://localhost:5000/usersa`,
                 {
                     headers: {
                         Authorization: `Bearer ${Cookies.get("accessToken")}`
@@ -146,7 +144,6 @@ const NewPembayaran = () => {
             console.error(error);
         }
     }
-
     const getSpp = async () => {
         try {
             const spp = await axios.get('http://localhost:5000/spp',
@@ -181,6 +178,7 @@ const NewPembayaran = () => {
     };
 
     const handleStatus = async () => {
+
         const response = await axios.get(`http://localhost:5000/spp/${id_spp}`,
             {
                 headers: {
@@ -196,6 +194,14 @@ const NewPembayaran = () => {
             })
         const Sum = historyPembayaran.data
         const Jumlah = parseInt(bayar) + Sum
+        const sisa = response.data.nominal - Sum
+        if (sisa === 0) {
+            setSisa('Lunas')
+        } else if (sisa > 0) {
+            setSisa(sisa.toLocaleString('id-ID', {
+                minimumFractionDigits: 0,
+            }))
+        }
         if (Jumlah === response.data.nominal) {
             setStatus(true);
         } else if (Jumlah > response.data.nominal) {
@@ -207,7 +213,6 @@ const NewPembayaran = () => {
             setStatus(false);
         }
     }
-
     return (
         <div className="new">
             <Sidebar />
@@ -222,45 +227,30 @@ const NewPembayaran = () => {
                         <div className="form-row">
                             <div className="form-group col">
                                 <FormControl fullWidth>
-                                    <InputLabel id="kelasInputLabel">Kelas</InputLabel>
-                                    <Select
-                                        labelId="kelasInputLabel"
-                                        id="kelas"
-                                        value={kelas || ''}
-                                        label="Kelas"
-                                        onChange={handleClassroomChange}
-                                        required
-                                    >
-                                        {classroom.map((kls) => (
-                                            <MenuItem key={kls.id_kelas} value={kls.id_kelas}>
-                                                {kls.angkatan + " " + kls.kelas}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
+                                    <Autocomplete
+                                        id="siswa"
+                                        options={students || []}
+                                        getOptionLabel={(option) => option.nisn + " - " + option.name}
+                                        value={students.find((option) => option.id_siswa === id_siswa) || null}
+                                        onChange={(e, newValue) => {
+                                            setId_siswa(newValue ? newValue.id_siswa : "");
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Siswa" variant="outlined" />
+                                        )}
+                                    />
                                 </FormControl>
                             </div>
                             <div className="form-group col">
-                                <FormControl fullWidth>
-                                    <InputLabel id="siswaInputLabel">Siswa</InputLabel>
-                                    <Select
-                                        labelId="siswaInputLabel"
-                                        id="siswa"
-                                        value={id_siswa || ''}
-                                        label="Age"
-                                        onChange={(e) => setId_siswa(e.target.value)}
-                                        required
-                                        helperText="Pilih Kelas Terlebih Dahulu"
-                                    >
-                                        {
-                                            students && students[0] !== null ? students.map((siswa) => (
-                                                <MenuItem key={siswa.id_siswa || ''} value={siswa.id_siswa || ''}>
-                                                    {siswa.nisn || ''} - {siswa.name || ''}
-                                                </MenuItem>
-                                            )) : <MenuItem value={''}>No Siswa Found</MenuItem>
-                                        }
-                                    </Select>
-                                </FormControl>
+                                <TextField
+                                    id="kelas"
+                                    label="Kelas"
+                                    value={valueKelas}
+                                    fullWidth
+                                    disabled
+                                />
                             </div>
+
                         </div>
                         <div className="form-row">
                             <div className="form-group col">
@@ -284,6 +274,19 @@ const NewPembayaran = () => {
                             </div>
                             <div className="form-group col">
                                 <TextField
+                                    id="sisa"
+                                    label="Sisa Bayar"
+                                    value={sisa || ''}
+                                    fullWidth
+                                    required
+                                    type="text"
+                                    disabled
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col">
+                                <TextField
                                     id="total"
                                     label="Total Bayar"
                                     value={formattedNominal}
@@ -293,14 +296,12 @@ const NewPembayaran = () => {
                                     type="text"
                                 />
                             </div>
-                        </div>
-                        <div className="form-row">
                             <div className="form-group col">
                                 <TextField
                                     id="total"
-                                    label="Total Bayar"
+                                    label="Keterangan"
                                     value={keterangan}
-                                    onChange={(e) => setKeterangan}
+                                    onChange={(e) => setKeterangan(e.target.value)}
                                     fullWidth
                                     required
                                     type="text"

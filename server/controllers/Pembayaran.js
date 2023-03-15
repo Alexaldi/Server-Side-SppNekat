@@ -17,7 +17,6 @@ export const getPembayaranById = async (req, res) => {
     try {
         const { limit, orderBy } = req.query;
         const order = orderBy.toUpperCase()
-        cl
         const response = await Pembayaran.findAll({
             where: {
                 id_siswa: req.params.id_siswa

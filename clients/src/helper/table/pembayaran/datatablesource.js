@@ -68,7 +68,7 @@ export const pembayaranColoums = [
     {
         field: 'jumlah_bayar',
         headerName: 'Total Bayar',
-        width: 140,
+        width: 130,
         valueGetter: (params) => {
             const nominal = params.value || 0;
             const formattedNominal = nominal.toLocaleString('id-ID', {
