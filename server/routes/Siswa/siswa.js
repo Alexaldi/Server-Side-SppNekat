@@ -11,5 +11,6 @@ routerSiswaB.post('/users', Register);
 routerSiswaB.post('/login', Login);
 routerSiswaB.get('/refresh', refreshToken);
 routerSiswaB.delete('/logout', Logout);
+
 // routerSiswaB.get('/search', verifyToken, search)
 export default routerSiswaB;
